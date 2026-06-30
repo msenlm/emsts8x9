@@ -607,8 +607,11 @@ function generate() {
 
 async function copySignature() {
   const preview = document.getElementById('preview');
-  const htmlContent = preview.innerHTML;
-  const plainText = preview.innerText;
+  const separator = activeClient === 'outlook'
+    ? '<div style="margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:18px;mso-line-height-rule:exactly;color:#4a4a4a;">--</div>'
+    : '';
+  const htmlContent = separator + preview.innerHTML;
+  const plainText = (activeClient === 'outlook' ? '--\n' : '') + preview.innerText;
   let copied = false;
 
   if (window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) {
