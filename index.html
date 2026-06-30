@@ -188,7 +188,8 @@
           </div>
 
           <div style="background: #ffffff; border-radius: 0 0 12px 12px; overflow: hidden;">
-            <div id="header-gmail" style="padding: 24px 28px 20px; border-bottom: 1px solid #f0f0f0;">
+            <div style="display: grid;">
+            <div id="header-gmail" style="grid-area: 1/1; padding: 24px 28px 20px; border-bottom: 1px solid #f0f0f0;">
               <div style="font-size: 16px; font-weight: 600; color: #000000; margin-bottom: 10px;">Lightmatter email signature</div>
               <div style="display: flex; align-items: center; gap: 10px;">
                 <div style="width: 36px; height: 36px; border-radius: 50%; background: #FF3300; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
@@ -203,7 +204,7 @@
                 </div>
               </div>
             </div>
-            <div id="header-outlook" style="display: none; padding: 20px 28px 16px; border-bottom: 1px solid #e0e0e0; background: #f3f2f1;">
+            <div id="header-outlook" style="grid-area: 1/1; visibility: hidden; padding: 20px 28px 16px; border-bottom: 1px solid #e0e0e0; background: #f3f2f1;">
               <div style="font-size: 18px; font-weight: 700; color: #000000; margin-bottom: 14px;">Lightmatter email signature</div>
               <div style="display: flex; gap: 10px; align-items: flex-start;">
                 <div style="width: 36px; height: 36px; border-radius: 50%; background: #797775; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;">
@@ -222,6 +223,7 @@
                 </div>
               </div>
             </div>
+            </div><!-- end header grid -->
 
             <div style="padding: 28px 28px 8px;">
 
@@ -275,9 +277,9 @@ function setClient(client) {
   document.getElementById('tab-gmail').classList.toggle('active', !isOutlook);
   document.getElementById('tab-outlook').classList.toggle('active', isOutlook);
 
-  // Email header
-  document.getElementById('header-gmail').style.display = isOutlook ? 'none' : 'block';
-  document.getElementById('header-outlook').style.display = isOutlook ? 'block' : 'none';
+  // Email header — visibility keeps both in layout so height never jumps
+  document.getElementById('header-gmail').style.visibility = isOutlook ? 'hidden' : 'visible';
+  document.getElementById('header-outlook').style.visibility = isOutlook ? 'visible' : 'hidden';
 
 
   // Window chrome
