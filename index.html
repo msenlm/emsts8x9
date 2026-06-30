@@ -590,9 +590,10 @@ function generate() {
   document.getElementById('preview').innerHTML = `
 <div dir="ltr" style="margin:0;padding:0;mso-margin-top-alt:0pt;mso-margin-bottom-alt:0pt;">
   <table cellpadding="0" cellspacing="0" border="0" role="presentation" bgcolor="#ffffff" style="border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;font-family:Arial,Helvetica,sans-serif;color:#4a4a4a;background:#ffffff;">
-    <tr><td style="padding:8px 0 10px 0;line-height:0;mso-line-height-rule:exactly;font-family:Arial,Helvetica,sans-serif;">
+    <tr><td style="padding:8px 0 0 0;line-height:0;mso-line-height-rule:exactly;font-family:Arial,Helvetica,sans-serif;">
       <img src="${logo}" width="88" height="44" alt="Lightmatter" onerror="this.onerror=null;this.src='${logoFallback}';" style="display:block;border:0;outline:0;text-decoration:none;">
     </td></tr>
+    <tr><td style="font-size:10px;line-height:10px;mso-line-height-rule:exactly;font-family:Arial,Helvetica,sans-serif;">&nbsp;</td></tr>
     <tr><td style="font-size:13px;line-height:18px;mso-line-height-rule:exactly;font-weight:700;color:#000000;font-family:Arial,Helvetica,sans-serif;">${esc(name.toUpperCase())}</td></tr>
     <tr><td style="font-size:13px;line-height:18px;mso-line-height-rule:exactly;color:#4a4a4a;font-family:Arial,Helvetica,sans-serif;">${esc(title)}</td></tr>
     <tr><td style="font-size:13px;line-height:18px;mso-line-height-rule:exactly;padding-bottom:4px;color:#4a4a4a;font-family:Arial,Helvetica,sans-serif;">${esc(COMPANY)}</td></tr>
