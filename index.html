@@ -170,7 +170,7 @@
         <!-- Email window -->
         <div id="email-window" style="border-radius: 12px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);">
           <div id="window-titlebar" style="background: #e0e0e0; border-radius: 12px 12px 0 0; padding: 14px 14px; display: flex; align-items: center; position: relative; transition: background 0.2s ease;">
-            <div id="traffic-lights" style="display: flex; gap: 6px; transition: opacity 0.2s;">
+            <div id="traffic-lights" style="display: flex; gap: 6px; align-items: center; height: 13px; transition: opacity 0.2s;">
               <div onclick="closeWindow()" style="width: 11px; height: 11px; border-radius: 50%; background: #ff5f57; cursor: pointer;"></div>
               <div style="width: 11px; height: 11px; border-radius: 50%; background: #febc2e;"></div>
               <div style="width: 11px; height: 11px; border-radius: 50%; background: #28c840;"></div>
@@ -660,34 +660,42 @@ document.getElementById('promo').addEventListener('change', function() {
 });
 
 function lockPreviewHeight() {
-  const body = document.getElementById('email-preview-body');
   const gmailH = document.getElementById('header-gmail');
   const outlookH = document.getElementById('header-outlook');
   const gmailI = document.getElementById('instructions-gmail');
   const outlookI = document.getElementById('instructions-outlook');
+  const body = document.getElementById('email-preview-body');
+  const headerGrid = gmailH.parentElement;
+  const instGrid = gmailI.parentElement;
 
-  // Measure Gmail height (current default state)
-  const gmailHeight = body.offsetHeight;
-
-  // Temporarily switch to Outlook and measure
-  gmailH.style.visibility = 'hidden';
+  // Switch grids to block temporarily so each item measures its own natural height
+  headerGrid.style.display = 'block';
+  instGrid.style.display = 'block';
   outlookH.style.visibility = 'visible';
-  gmailI.style.visibility = 'hidden';
   outlookI.style.visibility = 'visible';
-  const outlookHeight = body.offsetHeight;
 
-  // Restore Gmail state
-  gmailH.style.visibility = 'visible';
+  const maxHeaderH = Math.max(gmailH.offsetHeight, outlookH.offsetHeight);
+  const maxInstH = Math.max(gmailI.offsetHeight, outlookI.offsetHeight);
+
+  // Restore grid + gmail state
   outlookH.style.visibility = 'hidden';
-  gmailI.style.visibility = 'visible';
   outlookI.style.visibility = 'hidden';
+  headerGrid.style.display = 'grid';
+  instGrid.style.display = 'grid';
 
-  body.style.minHeight = Math.max(gmailHeight, outlookHeight) + 'px';
+  // Pin each section to the same height so the grid cell never changes
+  gmailH.style.minHeight = maxHeaderH + 'px';
+  outlookH.style.minHeight = maxHeaderH + 'px';
+  gmailI.style.minHeight = maxInstH + 'px';
+  outlookI.style.minHeight = maxInstH + 'px';
+
+  // Belt-and-suspenders: lock the body too
+  body.style.minHeight = body.offsetHeight + 'px';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   generate();
-  lockPreviewHeight();
+  document.fonts.ready.then(lockPreviewHeight);
 
   const phoneEl = document.getElementById('phone');
   phoneEl.addEventListener('input', () => {
